@@ -12,7 +12,6 @@ app = FastAPI(
     version="0.1.0"
 )
 
-# CORS MUST be immediately after app creation
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -31,19 +30,27 @@ class ReviewResponse(BaseModel):
     language: str
     focus: str
 
+
 @app.get("/health")
-def health_check():
-    return {"status": "ok"}
+async def health_check():
+    return {"status":"ok"}
+
 
 @app.post("/review", response_model=ReviewResponse)
-def create_review(request: ReviewRequest):
+async def create_review(request: ReviewRequest):
+
     if not request.code.strip():
-        raise HTTPException(status_code=400, detail="Code cannot be empty")
-    review_text = review_code(
+        raise HTTPException(
+            status_code=400,
+            detail="Code cannot be empty"
+        )
+
+    review_text = await review_code(
         code=request.code,
         language=request.language,
         focus=request.focus
     )
+
     return ReviewResponse(
         review=review_text,
         language=request.language,

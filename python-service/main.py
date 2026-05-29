@@ -15,11 +15,8 @@ app = FastAPI(
 # CORS MUST be immediately after app creation
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://devreview-ai-six.vercel.app",
-        "http://localhost:5173"
-    ],
-    allow_credentials=False,
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

@@ -1,0 +1,12 @@
+# Python
+python-service/.venv/
+python-service/.env
+python-service/__pycache__/
+python-service/*.pyc
+
+# Frontend
+frontend/node_modules/
+
+# Dotnet
+dotnet-gateway/bin/
+dotnet-gateway/obj/

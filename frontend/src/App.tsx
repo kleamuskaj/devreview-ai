@@ -78,7 +78,7 @@ function App() {
 
     const response =
       await fetch(
-        "http://localhost:5004/api/review/stream",
+        "https://devreview-ai-h5ow.onrender.com/review",
         {
           method: "POST",
           headers: {

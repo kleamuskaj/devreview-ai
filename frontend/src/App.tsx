@@ -71,52 +71,44 @@ function App() {
   const [copied, setCopied] =
     useState(false);
 
-  const runReview = async () => {
+const runReview = async () => {
 
-    setReview("");
-    setLoading(true);
+  setReview("");
+  setLoading(true);
+
+  try {
 
     const response =
       await fetch(
         "https://devreview-ai-h5ow.onrender.com/review",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
           },
-          body: JSON.stringify({
+          body:JSON.stringify({
             code,
             language,
             focus
           })
-        });
-
-    if (!response.body)
-      return;
-
-    const reader =
-      response.body.getReader();
-
-    const decoder =
-      new TextDecoder();
-
-    while (true) {
-      const { done, value } =
-        await reader.read();
-
-      if (done)
-        break;
-
-      const chunk =
-        decoder.decode(value);
-
-      setReview(
-        prev => prev + chunk
+        }
       );
-    }
 
-    setLoading(false);
-  };
+    const data =
+      await response.json();
+
+    setReview(data.review);
+
+  }
+  catch(err)
+  {
+    setReview(
+      "Failed to fetch review."
+    );
+  }
+
+  setLoading(false);
+};
 
   return (
 

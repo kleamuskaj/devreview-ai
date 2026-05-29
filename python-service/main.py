@@ -23,3 +23,32 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class ReviewRequest(BaseModel):
+    code: str
+    language: str = "csharp"
+    focus: str = "best practices"
+
+class ReviewResponse(BaseModel):
+    review: str
+    language: str
+    focus: str
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+@app.post("/review", response_model=ReviewResponse)
+def create_review(request: ReviewRequest):
+    if not request.code.strip():
+        raise HTTPException(status_code=400, detail="Code cannot be empty")
+    review_text = review_code(
+        code=request.code,
+        language=request.language,
+        focus=request.focus
+    )
+    return ReviewResponse(
+        review=review_text,
+        language=request.language,
+        focus=request.focus
+    )

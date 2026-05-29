@@ -523,7 +523,7 @@ function App() {
                   </td>
                 ),
 
-          code: ({ children, className, ...props }) => {
+          code: ({ children, className }) => {
 
   const inline =
     !className;

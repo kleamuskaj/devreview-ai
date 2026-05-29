@@ -12,7 +12,7 @@ app = FastAPI(title="DevReview AI", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://devreview-7cl5wt7ay-kleam-s-projects.vercel.app"
+        "https://devreview-ai-six.vercel.app"
     ],
     allow_credentials=False,
     allow_methods=["*"],
